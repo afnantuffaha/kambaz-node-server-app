@@ -1,0 +1,38 @@
+{
+  "name": "kambaz-node-server-app",
+  "version": "1.0.0",
+  "description": "Node.js HTTP Web server for the Kambaz application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afnantuffaha/kambaz-node-server-app.git"
+  },
+  "keywords": [
+    "Node",
+    "REST",
+    "Server",
+    "HTTP",
+    "Web",
+    "Development",
+    "CS5610",
+    "CS4550"
+  ],
+  "author": "Afnan Tuffaha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/afnantuffaha/kambaz-node-server-app/issues"
+  },
+  "homepage": "https://github.com/afnantuffaha/kambaz-node-server-app#readme",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "build": "^0.1.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "uuid": "^11.1.0"
+  }
+}
