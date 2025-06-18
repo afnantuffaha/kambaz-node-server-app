@@ -3,6 +3,12 @@ import * as courseDao from "../Courses/dao.js";
 import * as enrollmentsDao from "../Enrollments/dao.js";
 
 export default function UserRoutes(app) {
+  console.log("UserRoutes function is being called");
+  
+  // Test route
+  app.get("/api/users/test", (req, res) => {
+    res.json({ message: "UserRoutes is working!" });
+  });
   const createUser = async (req, res) => {
     const user = await dao.createUser(req.body);
     res.json(user);
@@ -111,14 +117,23 @@ export default function UserRoutes(app) {
    res.json(courses);
  };
  const enrollUserInCourse = async (req, res) => {
-   let { uid, cid } = req.params;
-   if (uid === "current") {
-     const currentUser = req.session["currentUser"];
-     uid = currentUser._id;
-   }
-   const status = await enrollmentsDao.enrollUserInCourse(uid, cid);
-   res.send(status);
- };
+    console.log("POST /api/users/:uid/courses/:cid hit");
+    try {
+      let { uid, cid } = req.params;
+      if (uid === "current") {
+        const currentUser = req.session["currentUser"];
+        if (!currentUser) {
+          return res.status(401).json({ message: "Not authenticated" });
+        }
+        uid = currentUser._id;
+      }
+      const status = await enrollmentsDao.enrollUserInCourse(uid, cid);
+      res.json(status);
+    } catch (error) {
+      console.error("Enrollment error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  };
  const unenrollUserFromCourse = async (req, res) => {
    let { uid, cid } = req.params;
    if (uid === "current") {
