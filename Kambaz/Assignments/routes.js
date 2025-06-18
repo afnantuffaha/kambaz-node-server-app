@@ -1,10 +1,11 @@
+// Kambaz/assignments/routes.js
 import * as assignmentsDao from "./dao.js";
 
 export default function AssignmentRoutes(app) {
-  app.get("/api/courses/:courseId/assignments", (req, res) => {
+  app.get("/api/courses/:courseId/assignments", async (req, res) => {
     try {
       const { courseId } = req.params;
-      const assignments = assignmentsDao.findAssignmentsForCourse(courseId);
+      const assignments = await assignmentsDao.findAssignmentsForCourse(courseId);
       res.json(assignments);
     } catch (error) {
       console.error("Error fetching assignments:", error);
@@ -12,14 +13,14 @@ export default function AssignmentRoutes(app) {
     }
   });
 
-  app.post("/api/courses/:courseId/assignments", (req, res) => {
+  app.post("/api/courses/:courseId/assignments", async (req, res) => {
     try {
       const { courseId } = req.params;
       const assignment = {
         ...req.body,
         course: courseId,
       };
-      const newAssignment = assignmentsDao.createAssignment(assignment);
+      const newAssignment = await assignmentsDao.createAssignment(assignment);
       res.json(newAssignment);
     } catch (error) {
       console.error("Error creating assignment:", error);
@@ -27,10 +28,10 @@ export default function AssignmentRoutes(app) {
     }
   });
 
-  app.get("/api/assignments/:assignmentId", (req, res) => {
+  app.get("/api/assignments/:assignmentId", async (req, res) => {
     try {
       const { assignmentId } = req.params;
-      const assignment = assignmentsDao.findAssignmentById(assignmentId);
+      const assignment = await assignmentsDao.findAssignmentById(assignmentId);
       if (assignment) {
         res.json(assignment);
       } else {
@@ -42,11 +43,11 @@ export default function AssignmentRoutes(app) {
     }
   });
 
-  app.put("/api/assignments/:assignmentId", (req, res) => {
+  app.put("/api/assignments/:assignmentId", async (req, res) => {
     try {
       const { assignmentId } = req.params;
       const assignmentUpdates = req.body;
-      const updatedAssignment = assignmentsDao.updateAssignment(assignmentId, assignmentUpdates);
+      const updatedAssignment = await assignmentsDao.updateAssignment(assignmentId, assignmentUpdates);
       if (updatedAssignment) {
         res.json(updatedAssignment);
       } else {
@@ -58,10 +59,10 @@ export default function AssignmentRoutes(app) {
     }
   });
 
-  app.delete("/api/assignments/:assignmentId", (req, res) => {
+  app.delete("/api/assignments/:assignmentId", async (req, res) => {
     try {
       const { assignmentId } = req.params;
-      const result = assignmentsDao.deleteAssignment(assignmentId);
+      const result = await assignmentsDao.deleteAssignment(assignmentId);
       res.json(result);
     } catch (error) {
       console.error("Error deleting assignment:", error);

@@ -44,7 +44,7 @@ export default function EnrollmentRoutes(app) {
         return;
       }
       
-      const enrollments = enrollmentsDao.findEnrollmentsForUser(currentUser._id);
+      const enrollments = enrollmentsDao.findCoursesForUser(currentUser._id);
       res.json(enrollments);
     } catch (error) {
       console.error("Error fetching user enrollments:", error);
